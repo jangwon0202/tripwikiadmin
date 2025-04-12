@@ -1,44 +1,29 @@
-import { getAuth, onAuthStateChanged, User } from "firebase/auth"
-import { doc, DocumentData, getDoc, getFirestore } from "firebase/firestore"
-import { useEffect, useState } from "react"
+// hooks/useAuth.ts
+import { onAuthStateChanged, User } from "firebase/auth"
+import { createContext, useContext, useEffect, useState } from "react"
+import { auth } from "../firebase"
 
-// 타입 정의
-interface UserWithPermissions extends User {
-  permissions: string[] // 권한을 배열로 정의
+interface AuthContextType {
+  user: User | null
 }
 
-export const useAuth = () => {
-  const [user, setUser] = useState<UserWithPermissions | null>(null) // user의 타입을 UserWithPermissions로 정의
-  const [permissions, setPermissions] = useState<string[]>([]) // permissions 배열의 타입을 string[]로 정의
+const AuthContext = createContext<AuthContextType>({ user: null })
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    const auth = getAuth()
-    const db = getFirestore()
-
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        const docRef = doc(db, "users", currentUser.uid)
-        const docSnap = await getDoc(docRef)
-        if (docSnap.exists()) {
-          const userData = docSnap.data() as DocumentData // 문서 데이터를 가져와 타입을 지정
-          setUser({
-            ...currentUser,
-            ...userData,
-            permissions: userData.permissions || [],
-          }) // user 객체에 permissions 추가
-          setPermissions(userData.permissions || [])
-        }
-      } else {
-        setUser(null)
-        setPermissions([])
-      }
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser)
     })
-
     return () => unsubscribe()
   }, [])
 
-  // hasPermission 함수에 타입 정의
-  const hasPermission = (perm: string): boolean => permissions.includes(perm)
-
-  return { user, permissions, hasPermission }
+  return (
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+  )
 }
+
+export const useAuth = () => useContext(AuthContext)

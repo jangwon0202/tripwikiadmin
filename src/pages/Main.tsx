@@ -1,7 +1,8 @@
-import React from "react";
+//src/pages/Main.tsx
+import React from "react"
 
 interface MenuItem {
-  title: string;
+  title: string
 }
 
 const menus: MenuItem[] = [
@@ -12,7 +13,7 @@ const menus: MenuItem[] = [
   { title: "축제 정보관리" },
   { title: "즐겨찾기 관리" },
   { title: "등등" },
-];
+]
 
 const Main: React.FC = () => {
   return (
@@ -51,7 +52,7 @@ const Main: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Main;
+export default Main
