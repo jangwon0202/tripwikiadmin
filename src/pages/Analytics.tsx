@@ -1,8 +1,8 @@
-// src/pages/Contents.tsx
+// src/pages/Analytics.tsx
 import React from "react"
 
 const Analytics: React.FC = () => {
-  return <div>관광지 관리 페이지입니다.</div>
+  return <div>통계 / 분석 페이지입니다.</div>
 }
 
 export default Analytics

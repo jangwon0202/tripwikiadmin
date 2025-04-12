@@ -1,16 +1,17 @@
 // src/App.tsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import React from "react" // 이 줄을 추가하세요.
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import Sidebar from "./components/Sidebar"
-import Main from "./pages/Main"
-import Users from "./pages/Users"
-import Contents from "./pages/Contents"
-import Events from "./pages/Events"
-import Reviews from "./pages/Reviews"
-import Favorites from "./pages/Favorites"
-import Planner from "./pages/Planner"
-import Notifications from "./pages/Notifications"
 import Analytics from "./pages/Analytics"
 import Backend from "./pages/Backend"
+import Contents from "./pages/Contents"
+import Events from "./pages/Events"
+import Favorites from "./pages/Favorites"
+import Main from "./pages/Main"
+import Notifications from "./pages/Notifications"
+import Planner from "./pages/Planner"
+import Reviews from "./pages/Reviews"
+import Users from "./pages/Users"
 
 const App: React.FC = () => {
   return (
