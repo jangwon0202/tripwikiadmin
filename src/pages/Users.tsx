@@ -3,6 +3,8 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { getDatabase, onValue, ref, remove, set } from "firebase/database"
 import { useEffect, useState } from "react"
 import { Button } from "../components/ui/button"
+import { httpsCallable } from "firebase/functions"
+import { functions } from "../firebase" // Firebase 앱에서 functions 가져오기
 
 type UserType = {
   uid: string
@@ -49,9 +51,17 @@ const Users = () => {
   }
 
   // 사용자 계정 삭제
-  const deleteUserAccount = (uid: string) => {
-    remove(ref(db, `users/${uid}`))
-    // 🔒 Firebase Auth에서는 서버 측에서 deleteUser를 사용해야 함 (client에서 제한)
+  const deleteUserAccount = async (uid: string) => {
+    const dbRef = ref(db, `users/${uid}`)
+    await remove(dbRef)
+  
+    const deleteAuthUser = httpsCallable(functions, "deleteAuthUser")
+    try {
+      await deleteAuthUser({ uid })
+      console.log("Auth 사용자도 삭제됨")
+    } catch (error) {
+      console.error("Auth 삭제 실패:", error)
+    }
   }
 
   // 새로운 사용자 생성
