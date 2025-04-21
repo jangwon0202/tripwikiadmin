@@ -2,15 +2,9 @@
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { getDatabase, onValue, ref, remove, set } from "firebase/database"
 import { useEffect, useState } from "react"
-<<<<<<< HEAD:src/pages/Users/AccountManager.tsx
 import { Button } from "../../components/ui/button"
 import { httpsCallable } from "firebase/functions"
 import { functions } from "../../firebase"
-=======
-import { Button } from "../components/ui/button"
-import { httpsCallable } from "firebase/functions"
-import { functions } from "../firebase" // Firebase 앱에서 functions 가져오기
->>>>>>> ae8e329899043d0cf7c2ea67904d2ec70affcb06:src/pages/Users.tsx
 
 type UserType = {
   uid: string
@@ -53,24 +47,12 @@ const AccountManager = () => {
     set(ref(db, `users/${uid}/permissions`), newPermissions)
   }
 
-<<<<<<< HEAD:src/pages/Users/AccountManager.tsx
   const deleteUserAccount = async (uid: string) => {
     const dbRef = ref(db, `users/${uid}`)
     await remove(dbRef)
     const deleteAuthUser = httpsCallable(functions, "deleteAuthUser")
     try {
       await deleteAuthUser({ uid })
-=======
-  // 사용자 계정 삭제
-  const deleteUserAccount = async (uid: string) => {
-    const dbRef = ref(db, `users/${uid}`)
-    await remove(dbRef)
-  
-    const deleteAuthUser = httpsCallable(functions, "deleteAuthUser")
-    try {
-      await deleteAuthUser({ uid })
-      console.log("Auth 사용자도 삭제됨")
->>>>>>> ae8e329899043d0cf7c2ea67904d2ec70affcb06:src/pages/Users.tsx
     } catch (error) {
       console.error("Auth 삭제 실패:", error)
     }
