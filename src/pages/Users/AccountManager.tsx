@@ -1,8 +1,10 @@
-// src/pages/Users.tsx
+// src/pages/Users/AccountManager.tsx
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { getDatabase, onValue, ref, remove, set } from "firebase/database"
 import { useEffect, useState } from "react"
-import { Button } from "../components/ui/button"
+import { Button } from "../../components/ui/button"
+import { httpsCallable } from "firebase/functions"
+import { functions } from "../../firebase"
 
 type UserType = {
   uid: string
@@ -11,7 +13,7 @@ type UserType = {
   permissions: string
 }
 
-const Users = () => {
+const AccountManager = () => {
   const [users, setUsers] = useState<UserType[]>([])
   const [newEmail, setNewEmail] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -21,7 +23,6 @@ const Users = () => {
   const db = getDatabase()
   const auth = getAuth()
 
-  // 사용자 목록을 불러오는 useEffect
   useEffect(() => {
     const usersRef = ref(db, "users")
     onValue(usersRef, (snapshot) => {
@@ -38,23 +39,25 @@ const Users = () => {
     })
   }, [db])
 
-  // 이름 업데이트
   const updateName = (uid: string, newName: string) => {
     set(ref(db, `users/${uid}/name`), newName)
   }
 
-  // 권한 업데이트
   const updatePermissions = (uid: string, newPermissions: string) => {
     set(ref(db, `users/${uid}/permissions`), newPermissions)
   }
 
-  // 사용자 계정 삭제
-  const deleteUserAccount = (uid: string) => {
-    remove(ref(db, `users/${uid}`))
-    // 🔒 Firebase Auth에서는 서버 측에서 deleteUser를 사용해야 함 (client에서 제한)
+  const deleteUserAccount = async (uid: string) => {
+    const dbRef = ref(db, `users/${uid}`)
+    await remove(dbRef)
+    const deleteAuthUser = httpsCallable(functions, "deleteAuthUser")
+    try {
+      await deleteAuthUser({ uid })
+    } catch (error) {
+      console.error("Auth 삭제 실패:", error)
+    }
   }
 
-  // 새로운 사용자 생성
   const createNewUser = async (
     email: string,
     password: string,
@@ -68,8 +71,6 @@ const Users = () => {
         password
       )
       const newUser = userCredential.user
-
-      // Firebase Realtime Database에 새 사용자 정보 저장
       await set(ref(db, `users/${newUser.uid}`), {
         email,
         name,
@@ -81,8 +82,9 @@ const Users = () => {
   }
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">사용자 관리</h2>
+    <div className="p-4">
+      <h2 className="text-xl font-bold mb-4">계정 관리</h2>
+
       {users.map((user) => (
         <div key={user.uid} className="mb-4 p-2 border rounded">
           <p>이메일: {user.email}</p>
@@ -109,7 +111,6 @@ const Users = () => {
         </div>
       ))}
 
-      {/* 새 사용자 추가 섹션 */}
       <div className="mb-8 border p-4 rounded bg-gray-50">
         <h3 className="font-semibold mb-2">새 사용자 추가</h3>
         <input
@@ -145,10 +146,10 @@ const Users = () => {
           className="bg-blue-500 text-white"
           onClick={() => {
             createNewUser(newEmail, newPassword, newName, newPermission)
-            setNewEmail("") // 입력 필드 초기화
-            setNewPassword("") // 입력 필드 초기화
-            setNewName("") // 입력 필드 초기화
-            setNewPermission("user") // 권한 기본값으로 초기화
+            setNewEmail("")
+            setNewPassword("")
+            setNewName("")
+            setNewPermission("user")
           }}
         >
           사용자 추가
@@ -158,4 +159,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default AccountManager
