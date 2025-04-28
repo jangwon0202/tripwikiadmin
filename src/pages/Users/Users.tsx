@@ -11,7 +11,7 @@ const Users = () => {
       <div className="space-y-4">
         <Button className="w-full" onClick={() => navigate("account")}>1. 계정 관리</Button>
         <Button className="w-full" onClick={() => navigate("posts")}>2. 게시글 관리</Button>
-        <Button className="w-full" disabled>3. 리뷰글 관리 (준비중)</Button>
+        <Button className="w-full" onClick={() => navigate("../reviews")}>3. 리뷰글 관리</Button>
         <Button className="w-full" disabled>4. 팔로잉 관리 (준비중)</Button>
         <Button className="w-full" disabled>5. 팔로워 관리 (준비중)</Button>
       </div>

@@ -15,6 +15,8 @@ type UserType = {
 
 const AccountManager = () => {
   const [users, setUsers] = useState<UserType[]>([])
+  const [searchTerm, setSearchTerm] = useState("")
+  const [searchType, setSearchType] = useState<"name" | "email">("name")
   const [newEmail, setNewEmail] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [newName, setNewName] = useState("")
@@ -81,11 +83,44 @@ const AccountManager = () => {
     }
   }
 
+  // 검색 필터
+  const filteredUsers = users.filter((user) => {
+    const valueToSearch =
+      searchType === "name" ? user.name : user.email
+    return valueToSearch
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  })
+
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">계정 관리</h2>
 
-      {users.map((user) => (
+      {/* 검색 옵션 및 입력창 */}
+      <div className="flex items-center gap-2 mb-4">
+        <select
+          value={searchType}
+          onChange={(e) =>
+            setSearchType(e.target.value as "name" | "email")
+          }
+          className="border px-2 py-1 rounded"
+        >
+          <option value="name">이름</option>
+          <option value="email">이메일</option>
+        </select>
+        <input
+          type="text"
+          placeholder={`${
+            searchType === "name" ? "이름" : "이메일"
+          } 입력`}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border px-3 py-2 w-full rounded"
+        />
+      </div>
+
+      {/* 유저 리스트 */}
+      {filteredUsers.map((user) => (
         <div key={user.uid} className="mb-4 p-2 border rounded">
           <p>이메일: {user.email}</p>
           <input
@@ -111,6 +146,7 @@ const AccountManager = () => {
         </div>
       ))}
 
+      {/* 새 사용자 추가 */}
       <div className="mb-8 border p-4 rounded bg-gray-50">
         <h3 className="font-semibold mb-2">새 사용자 추가</h3>
         <input
