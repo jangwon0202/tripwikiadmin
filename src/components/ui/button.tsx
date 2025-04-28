@@ -1,18 +1,30 @@
 // src/components/ui/button.tsx
 import React from "react"
 
-// Button 컴포넌트
-type ButtonProps = {
-  onClick: () => void // 버튼 클릭 시 호출될 함수
-  children: React.ReactNode // 버튼 안에 들어갈 내용
-  className?: string // 추가적인 클래스 이름을 받을 수 있는 옵션
+type Variant = "default" | "outline"
+
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  children: React.ReactNode
+  variant?: Variant
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, children, className }) => {
+const Button: React.FC<ButtonProps> = ({
+  children,
+  className = "",
+  variant = "default",
+  ...props
+}) => {
+  // variant에 따른 클래스 분기
+  const baseClass = "px-4 py-2 rounded focus:outline-none"
+  const variantClass =
+    variant === "outline"
+      ? "border border-gray-300 text-gray-700 bg-white hover:bg-gray-100"
+      : "bg-blue-500 text-white hover:bg-blue-700"
+
   return (
     <button
-      onClick={onClick}
-      className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none ${className}`}
+      {...props}
+      className={`${baseClass} ${variantClass} ${className}`}
     >
       {children}
     </button>

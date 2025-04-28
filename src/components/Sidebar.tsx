@@ -10,6 +10,7 @@ const FaToolsIcon = FaIcons.FaTools as React.FC<{ size?: number }>
 const FaCommentsIcon = FaIcons.FaComments as React.FC<{ size?: number }>
 const FaMapMarkerAltIcon = FaIcons.FaMapMarkerAlt as React.FC<{ size?: number }>
 const FaStarIcon = FaIcons.FaStar as React.FC<{ size?: number }>
+const FaHomeIcon = FaIcons.FaHome as React.FC<{ size?: number }>
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate()
@@ -25,6 +26,12 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="w-20 bg-pink-100 h-screen flex flex-col items-center py-4 space-y-6">
+      {/* 메인 페이지 이동 버튼 */}
+      <Link to="/" className="flex flex-col items-center hover:text-pink-700">
+        <FaHomeIcon size={24} />
+        <p className="text-xs mt-1">메인</p>
+      </Link>
+
       {/* 계정 버튼 */}
       <div className="flex flex-col items-center">
         <button
