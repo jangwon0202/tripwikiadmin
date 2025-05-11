@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { get, ref } from "firebase/database"
-import { auth, database } from "../firebase"
+import { auth } from "../firebase/auth"
+import { database } from "../firebase/database"
 
 // 관리자 권한 확인 함수
 const checkAdminPermission = async (uid: string): Promise<boolean> => {

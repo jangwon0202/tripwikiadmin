@@ -11,6 +11,7 @@ const FaCommentsIcon = FaIcons.FaComments as React.FC<{ size?: number }>
 const FaMapMarkerAltIcon = FaIcons.FaMapMarkerAlt as React.FC<{ size?: number }>
 const FaStarIcon = FaIcons.FaStar as React.FC<{ size?: number }>
 const FaHomeIcon = FaIcons.FaHome as React.FC<{ size?: number }>
+const FaUserFriendsIcon = FaIcons.FaUserFriends as React.FC<{ size?: number }>;
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate()
@@ -77,6 +78,10 @@ const Sidebar: React.FC = () => {
       <Link to="/favorites" className="flex flex-col items-center text-center">
         <FaStarIcon size={24} />
         <p className="text-xs mt-1">즐겨찾기</p>
+      </Link>
+      <Link to="/friends" className="flex flex-col items-center hover:text-pink-700">
+        <FaUserFriendsIcon size={24} />
+        <p className="text-xs mt-1">친구 관리</p>
       </Link>
     </div>
   )

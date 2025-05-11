@@ -4,7 +4,7 @@ import { getDatabase, onValue, ref, remove, set } from "firebase/database"
 import { useEffect, useState } from "react"
 import { Button } from "../../components/ui/button"
 import { httpsCallable } from "firebase/functions"
-import { functions } from "../../firebase"
+import { functions } from "../../firebase/functions"
 
 type UserType = {
   uid: string
