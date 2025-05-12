@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from "./hooks/useAuth";
 import Analytics from "./pages/Analytics";
 import Backend from "./pages/Backend";
 import Contents from "./pages/Contents";
+import Comment from "./pages/Comment";
 import Detail from "./pages/Detail";
 import Events from "./pages/Events";
 import Favorites from "./pages/Favorites";
@@ -57,6 +58,7 @@ const App: React.FC = () => {
             <Route path="users/posts" element={<PostManager />} />
             <Route path="users/posts/edit/:postId" element={<EditPost />} />
             <Route path="contents" element={<Contents />} />
+            <Route path="comment" element={<Comment />} />
             <Route path="events" element={<Events />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="favorites" element={<Favorites />} />

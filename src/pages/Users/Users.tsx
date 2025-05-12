@@ -15,11 +15,17 @@ const Users = () => {
         <Button className="w-full" onClick={() => navigate("posts")}>
           2. 게시글 관리
         </Button>
-        <Button className="w-full" onClick={() => navigate("../reviews")}>
-          3. 리뷰글 관리
+        <Button className="w-full" onClick={() => navigate("../comment")}>
+          3. 댓글 관리
         </Button>
-        <Button className="w-full" onClick={() => navigate("friends")}>
-          4. 팔로워/팔로잉
+        <Button className="w-full" onClick={() => navigate("../reviews")}>
+          4. 리뷰글 관리
+        </Button>
+        <Button className="w-full" onClick={() => navigate("../Friends/friends")}>
+          5. 팔로워/팔로잉
+        </Button>
+        <Button className="w-full" disabled>
+          6. 즐겨찾기
         </Button>
       </div>
     </div>

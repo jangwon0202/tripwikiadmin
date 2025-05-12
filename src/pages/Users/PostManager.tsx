@@ -1,3 +1,4 @@
+// src/pages/Users/PostManager.tsx
 import { getDatabase, onValue, ref, remove, runTransaction, get } from "firebase/database"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -13,6 +14,7 @@ type Post = {
   timestamp: number
   uid: string // ✅ 추가
 }
+
 
 const PostManager = () => {
   const [posts, setPosts] = useState<Post[]>([])
@@ -39,14 +41,20 @@ const PostManager = () => {
     })
   }, [])
 
-  const deletePost = async (postId: string, uid: string) => {
+  const deletePost = async (postId: string, uid?: string) => {
     const db = getDatabase()
+  
+    if (!uid) {
+      alert("이 게시글은 UID 정보가 없어 삭제할 수 없습니다.")
+      return
+    }
+  
     try {
       await Promise.all([
-        remove(ref(db, `community/${postId}`)), // 커뮤니티에서 삭제
-        remove(ref(db, `users/${uid}/Post/${postId}`)), // 사용자 경로에서 삭제
+        remove(ref(db, `community/${postId}`)),
+        remove(ref(db, `users/${uid}/Post/${postId}`)),
         runTransaction(ref(db, `users/${uid}/postCount`), (currentCount) => {
-          return (currentCount || 0) - 1 // 게시물 수 감소
+          return (currentCount || 0) > 0 ? currentCount - 1 : 0 // 음수 방지
         }),
       ])
       alert("게시글이 삭제되었습니다.")

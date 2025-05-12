@@ -7,11 +7,9 @@ import { useAuth } from "../hooks/useAuth"
 const FaUserCogIcon = FaIcons.FaUserCog as React.FC<{ size?: number }>
 const FaPlusIcon = FaIcons.FaPlus as React.FC<{ size?: number }>
 const FaToolsIcon = FaIcons.FaTools as React.FC<{ size?: number }>
-const FaCommentsIcon = FaIcons.FaComments as React.FC<{ size?: number }>
 const FaMapMarkerAltIcon = FaIcons.FaMapMarkerAlt as React.FC<{ size?: number }>
-const FaStarIcon = FaIcons.FaStar as React.FC<{ size?: number }>
 const FaHomeIcon = FaIcons.FaHome as React.FC<{ size?: number }>
-const FaUserFriendsIcon = FaIcons.FaUserFriends as React.FC<{ size?: number }>;
+const FaChartBar = FaIcons.FaChartBar as React.FC<{ size?: number }>
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate()
@@ -63,25 +61,17 @@ const Sidebar: React.FC = () => {
       </div>
 
       {/* 나머지 메뉴 */}
-      <Link to="/backend" className="flex flex-col items-center text-center">
-        <FaToolsIcon size={24} />
-        <p className="text-xs mt-1">백엔드</p>
-      </Link>
-      <Link to="/reviews" className="flex flex-col items-center text-center">
-        <FaCommentsIcon size={24} />
-        <p className="text-xs mt-1">리뷰</p>
-      </Link>
       <Link to="/contents" className="flex flex-col items-center text-center">
         <FaMapMarkerAltIcon size={24} />
         <p className="text-xs mt-1">관광지</p>
       </Link>
-      <Link to="/favorites" className="flex flex-col items-center text-center">
-        <FaStarIcon size={24} />
-        <p className="text-xs mt-1">즐겨찾기</p>
+      <Link to="/analytics" className="flex flex-col items-center text-center">
+        <FaChartBar size={24} />
+        <p className="text-xs mt-1">통계</p>
       </Link>
-      <Link to="/friends" className="flex flex-col items-center hover:text-pink-700">
-        <FaUserFriendsIcon size={24} />
-        <p className="text-xs mt-1">친구 관리</p>
+      <Link to="/backend" className="flex flex-col items-center text-center">
+        <FaToolsIcon size={24} />
+        <p className="text-xs mt-1">백엔드</p>
       </Link>
     </div>
   )
