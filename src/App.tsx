@@ -14,7 +14,7 @@ import Contents from "./pages/Contents";
 import Comment from "./pages/Comment";
 import Detail from "./pages/Detail";
 import Events from "./pages/Events";
-import Favorites from "./pages/Favorites";
+import Favorites from "./pages/Users/Favorites";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 import Notifications from "./pages/Notifications";
@@ -61,7 +61,7 @@ const App: React.FC = () => {
             <Route path="comment" element={<Comment />} />
             <Route path="events" element={<Events />} />
             <Route path="reviews" element={<Reviews />} />
-            <Route path="favorites" element={<Favorites />} />
+            <Route path="users/favorites" element={<Favorites />} />
             <Route path="planner" element={<Planner />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="analytics" element={<Analytics />} />

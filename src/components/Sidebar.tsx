@@ -65,6 +65,10 @@ const Sidebar: React.FC = () => {
         <FaMapMarkerAltIcon size={24} />
         <p className="text-xs mt-1">관광지</p>
       </Link>
+      <Link to="/events" className="flex flex-col items-center text-center">
+        <FaMapMarkerAltIcon size={24} />
+        <p className="text-xs mt-1">축제</p>
+      </Link>
       <Link to="/analytics" className="flex flex-col items-center text-center">
         <FaChartBar size={24} />
         <p className="text-xs mt-1">통계</p>

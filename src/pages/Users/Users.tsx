@@ -24,7 +24,7 @@ const Users = () => {
         <Button className="w-full" onClick={() => navigate("../Friends/friends")}>
           5. 팔로워/팔로잉
         </Button>
-        <Button className="w-full" disabled>
+        <Button className="w-full" onClick={() => navigate("favorites")}>
           6. 즐겨찾기
         </Button>
       </div>
